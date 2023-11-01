@@ -1,0 +1,25 @@
+### Login
+POST http://localhost:3000/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "mario@dev.com",
+  "password": "Asd@123"
+}
+
+
+### Hello World
+GET http://localhost:3000/ HTTP/1.1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibWFyaW9AZGV2LmNvbSIsInVzZXJuYW1lIjoibWFyaW9iaXNjaG9mZiIsImlhdCI6MTY5ODc3ODA0MSwiZXhwIjoxNzAxMzcwMDQxfQ.AuV8J2In0a806iLB6ErGMbDxBeZlqkl3UNvcMr9vgvw
+
+
+### Users
+GET http://localhost:3000/users HTTP/1.1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibWFyaW9AZGV2LmNvbSIsInVzZXJuYW1lIjoibWFyaW9iaXNjaG9mZiIsImlhdCI6MTY5ODc3ODA0MSwiZXhwIjoxNzAxMzcwMDQxfQ.AuV8J2In0a806iLB6ErGMbDxBeZlqkl3UNvcMr9vgvw
+
+### Tasks
+GET http://localhost:3000/tasks HTTP/1.1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibWFyaW9AZGV2LmNvbSIsInVzZXJuYW1lIjoibWFyaW9iaXNjaG9mZiIsImlhdCI6MTY5ODc3ODA0MSwiZXhwIjoxNzAxMzcwMDQxfQ.AuV8J2In0a806iLB6ErGMbDxBeZlqkl3UNvcMr9vgvw
