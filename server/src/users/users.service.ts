@@ -1,8 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
@@ -13,20 +15,39 @@ export class UsersService {
       ...createUserDto,
       password: await bcrypt.hash(createUserDto.password, 10),
     };
-    const createdUser = this.prisma.user.create({ data: user });
-    return { ...createdUser, password: undefined };
+    try {
+      const createdUser = await this.prisma.user.create({ data: user });
+      delete createdUser.password;
+      return createdUser;
+    } catch (err) {
+      if (err instanceof PrismaClientKnownRequestError) {
+        if (err.code === 'P2002') {
+          throw new ForbiddenException('Credentials taken');
+        }
+      }
+      throw err;
+    }
   }
 
-  findAll() {
-    return this.prisma.user.findMany();
+  async findAll() {
+    const users: User[] = await this.prisma.user.findMany();
+    users.map((user) => delete user.password);
+    return users;
   }
 
-  findOne(id: number) {
-    return this.prisma.user.findUnique({ where: { id } });
+  async findOne(id: number) {
+    const user: User = await this.prisma.user.findUnique({ where: { id } });
+    delete user.password;
+    return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return this.prisma.user.update({ where: { id }, data: updateUserDto });
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const user: User = await this.prisma.user.update({
+      where: { id },
+      data: updateUserDto,
+    });
+    delete user.password;
+    return user;
   }
 
   remove(id: number) {

@@ -12,13 +12,13 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthResquest } from './models/AuthRequest';
 import { IsPublic } from './decorators/is-public.decorator';
 
-@Controller()
+@Controller('auth')
 @ApiTags('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @IsPublic()
-  @Post('login')
+  @Post('signin')
   @HttpCode(HttpStatus.OK)
   @UseGuards(LocalAuthGuard)
   login(@Request() req: AuthResquest) {
